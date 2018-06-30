@@ -16,7 +16,7 @@ public class BallMovement : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		ChangeDirectionInYAxis();
-		if(GetIsInGoal())
+		if(IsInGoal())
 			Reset();	
 	}
 
@@ -35,13 +35,17 @@ public class BallMovement : MonoBehaviour {
 		m_Direction = new Vector3(Mathf.Cos(angle) * collision.transform.right.x, Mathf.Sin(angle), 0f).normalized;
     }
 
-	bool GetIsInGoal(){
+	bool IsInGoal(){
 		transform.Translate(m_Direction * m_Speed);
 		Vector3 pos = Camera.main.WorldToViewportPoint(transform.position);
 
 		if(pos.x <= 0.0f || pos.x >= 1.0f)
 			return true;
 		return false;
+	}
+
+	void AddAgentReward(){
+		
 	}
 
 	public void Reset(){
