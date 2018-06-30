@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class BallMovement : MonoBehaviour {
-
+	[SerializeField] float m_MaxAngle = 75f;
 	[SerializeField] Vector3 m_Direction;
 	[SerializeField] float m_Speed = 0.1f;
 	Vector3 m_StartPosition;
@@ -28,7 +28,11 @@ public class BallMovement : MonoBehaviour {
 	}
 
 	void OnCollisionEnter(Collision collision){
-        m_Direction.x *= -1;
+		Vector3 padPosition = collision.transform.position;
+		float yOffset = Mathf.Clamp(transform.position.y - padPosition.y, -1f, 1f);
+		float angle = yOffset * m_MaxAngle * Mathf.Deg2Rad;
+
+		m_Direction = new Vector3(Mathf.Cos(angle) * collision.transform.right.x, Mathf.Sin(angle), 0f).normalized;
     }
 
 	bool GetIsInGoal(){
