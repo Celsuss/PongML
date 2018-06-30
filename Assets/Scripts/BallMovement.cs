@@ -1,16 +1,20 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 public class BallMovement : MonoBehaviour {
+	[SerializeField] float m_GoalReward = 1f;
 	[SerializeField] float m_MaxAngle = 75f;
 	[SerializeField] Vector3 m_Direction;
 	[SerializeField] float m_Speed = 0.1f;
+	[SerializeField] AgentRewards m_AgentRewards;
 	Vector3 m_StartPosition;
 
 	// Use this for initialization
 	void Start () {
 		m_StartPosition = transform.position;
+		Assert.IsNotNull(m_AgentRewards);
 	}
 	
 	// Update is called once per frame
@@ -39,13 +43,19 @@ public class BallMovement : MonoBehaviour {
 		transform.Translate(m_Direction * m_Speed);
 		Vector3 pos = Camera.main.WorldToViewportPoint(transform.position);
 
-		if(pos.x <= 0.0f || pos.x >= 1.0f)
+		if(pos.x <= 0.0f){
+			AddAgentReward(m_GoalReward);
 			return true;
+		}
+		else if(pos.x >= 1.0f){
+			AddAgentReward(-m_GoalReward);
+			return true;
+		}
 		return false;
 	}
 
-	void AddAgentReward(){
-		
+	void AddAgentReward(float reward){
+		m_AgentRewards.GiveReward(reward);
 	}
 
 	public void Reset(){
