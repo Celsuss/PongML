@@ -45,10 +45,12 @@ public class BallMovement : MonoBehaviour {
 
 		if(pos.x <= 0.0f){
 			AddAgentReward(m_GoalReward);
+			ScoreManager.Instance.AddScore(0, 1);
 			return true;
 		}
 		else if(pos.x >= 1.0f){
 			AddAgentReward(-m_GoalReward);
+			ScoreManager.Instance.AddScore(1, 1);
 			return true;
 		}
 		return false;

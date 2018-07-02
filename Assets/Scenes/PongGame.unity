@@ -685,6 +685,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cfb586a3516e59443986879e1a515a71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_ScoreText: {fileID: 939265743}
 --- !u!1 &1413667990
 GameObject:
   m_ObjectHideFlags: 0
@@ -899,6 +900,7 @@ MonoBehaviour:
   m_Direction: {x: -1, y: 0.5, z: 0}
   m_Speed: 0.05
   m_AgentRewards: {fileID: 834784356}
+  m_ScoreManager: {fileID: 0}
 --- !u!54 &1527529439
 Rigidbody:
   m_ObjectHideFlags: 0
