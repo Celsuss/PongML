@@ -44,19 +44,22 @@ public class BallMovement : MonoBehaviour {
 		Vector3 pos = Camera.main.WorldToViewportPoint(transform.position);
 
 		if(pos.x <= 0.0f){
-			AddAgentReward(m_GoalReward);
-			ScoreManager.Instance.AddScore(0, 1);
+			AddScore(1);
 			return true;
 		}
 		else if(pos.x >= 1.0f){
-			AddAgentReward(-m_GoalReward);
-			ScoreManager.Instance.AddScore(1, 1);
+			AddScore(0);
 			return true;
 		}
 		return false;
 	}
 
-	void AddAgentReward(float reward){
+	void AddScore(int pad){
+		int reward = 1;
+		if(pad == 0)
+			reward = -1;
+
+		ScoreManager.Instance.AddScore(pad, 1);
 		m_AgentRewards.GiveReward(reward);
 	}
 

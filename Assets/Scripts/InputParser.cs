@@ -17,7 +17,7 @@ public class InputParser : MonoBehaviour {
 
 	[SerializeField] Text m_InputText;
 	[SerializeField] int m_MaxInputs;
-	Queue<float> m_Inputs;
+	Queue<float> m_Inputs = new Queue<float>();
 
 	// Use this for initialization
 	void Start () {
@@ -31,17 +31,21 @@ public class InputParser : MonoBehaviour {
 	void UpdateInputText(){
 		string text = "Inputs: [";
 		foreach(float input in m_Inputs){
-			text.Insert(text.Length-1, input.ToString() + ", ");
+			text = text.Insert(text.Length, input.ToString() + ", ");
 		}
 
 		// Remove last komma 
 		if(!text.EndsWith("["))
-			text.Remove(text.Length-1);
+			text = text.Remove(text.Length-1);
 
-		text.Insert(text.Length-1, "]");
+		text = text.Insert(text.Length, "]");
+		m_InputText.text = text;
 	}
 
 	public void AddInput(float input){
+		if(input == 0)
+			return;
+
 		m_Inputs.Enqueue(input);
 
 		while(m_Inputs.Count > m_MaxInputs)
