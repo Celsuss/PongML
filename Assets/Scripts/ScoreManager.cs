@@ -15,7 +15,10 @@ public class ScoreManager : MonoBehaviour {
 		}
 	}
 	
+	public delegate void EndGameEvent();
+	public static event EndGameEvent OnEndGame;
 	[SerializeField] Text m_ScoreText;
+	[SerializeField] int m_MaxScore = 3;
 	List<float> m_Score = new List<float>();
 
 	// Use this for initialization
@@ -35,6 +38,19 @@ public class ScoreManager : MonoBehaviour {
 	public void AddScore(int player, float score){
 		m_Score[player] += score;
 		UpdateScoreText();
+
+		if(m_Score[0] > m_MaxScore)
+			EndGame(0);
+		if(m_Score[1] > m_MaxScore)
+			EndGame(1);
+	}
+
+	void EndGame(int winner){
+		if(OnEndGame != null)
+			OnEndGame();
+	}
+	void UpdateScoreText(){
+		m_ScoreText.text = "Score: " + m_Score[0] + " - " + m_Score[1];
 	}
 
 	public void Reset(){
@@ -42,7 +58,4 @@ public class ScoreManager : MonoBehaviour {
 			m_Score[i] = 0;
 	}
 
-	void UpdateScoreText(){
-		m_ScoreText.text = "Score: " + m_Score[0] + " - " + m_Score[1];
-	}
 }

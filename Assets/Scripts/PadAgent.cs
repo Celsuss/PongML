@@ -18,6 +18,14 @@ public class PadAgent : Agent {
 		m_Rewards = GetComponent<AgentRewards>();
 		Assert.IsNotNull(m_Rewards);
 	}
+
+	/*void OnEnable(){
+		//ScoreManager.OnEndGame += AgentReset;
+	}
+
+	void OnDisable(){
+		//ScoreManager.OnEndGame -= AgentReset;
+	}*/
 	
 	public override void AgentReset(){
 		m_Rewards.Reset();

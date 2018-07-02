@@ -16,6 +16,14 @@ public class BallMovement : MonoBehaviour {
 		m_StartPosition = transform.position;
 		Assert.IsNotNull(m_AgentRewards);
 	}
+
+	void OnEnable(){
+		ScoreManager.OnEndGame += Reset;
+	}
+
+	void OnDisable(){
+		ScoreManager.OnEndGame -= Reset;
+	}
 	
 	// Update is called once per frame
 	void Update () {
@@ -44,10 +52,12 @@ public class BallMovement : MonoBehaviour {
 		Vector3 pos = Camera.main.WorldToViewportPoint(transform.position);
 
 		if(pos.x <= 0.0f){
+			m_Direction.x *= -1;
 			AddScore(1);
 			return true;
 		}
 		else if(pos.x >= 1.0f){
+			m_Direction.x *= -1;
 			AddScore(0);
 			return true;
 		}
